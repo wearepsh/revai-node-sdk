@@ -145,11 +145,13 @@ export class RevAiStreamingClient extends EventEmitter {
 
     private doSendLoop(connection: any, buffer: PassThrough): void {
         if (connection.connected) {
-            let value = buffer.read(buffer.readableLength);
+            const value: Buffer = buffer.read(buffer.readableLength);
             if (value !== null) {
-                connection.send(value);
-                if (value.includes('EOS') || value.includes(Buffer.from('EOS'))) {
-                    connection.sendUTF('EOS');
+                if (value.includes(EosString) || value.includes(Buffer.from(EosString))) {
+                    connection.send(value.slice(0, value.length - EosString.length));
+                    connection.sendUTF(EosString);
+                } else {
+                    connection.send(value);
                 }
             }
             setTimeout(() => this.doSendLoop(connection, buffer), 100);
@@ -161,3 +163,4 @@ export class RevAiStreamingClient extends EventEmitter {
         this.responses.push(null);
     }
 }
+const EosString = 'EOS';
