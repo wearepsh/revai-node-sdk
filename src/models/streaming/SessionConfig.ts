@@ -7,7 +7,8 @@ export class SessionConfig {
     filterProfanity?: boolean;
     removeDisfluencies?: boolean;
     deleteAfterSeconds?: number;
-
+    start_ts?: number;
+  
     /**
      * @param metadata (Optional) metadata to be associated with the streaming job
      * @param customVocabularyID (Optional) id of custom vocabulary to be used for
@@ -24,12 +25,14 @@ export class SessionConfig {
         customVocabularyID?: string,
         filterProfanity?: boolean,
         removeDisfluencies?: boolean,
-        deleteAfterSeconds?: number
+        deleteAfterSeconds?: number,
+        start_ts?: number
     ) {
         this.metadata = metadata;
         this.customVocabularyID = customVocabularyID;
         this.filterProfanity = filterProfanity;
         this.removeDisfluencies = removeDisfluencies;
         this.deleteAfterSeconds = deleteAfterSeconds;
+        this.start_ts = start_ts;
     }
 }
